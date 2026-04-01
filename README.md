@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Medicare Plus - Hospital Management System
 
 A complete Full Stack Hospital Management System built with React, Node.js, Express, and MySQL.
@@ -65,3 +66,6 @@ A complete Full Stack Hospital Management System built with React, Node.js, Expr
 
 - **Admin Login**: `admin@hospital.com` / `admin123`
 - **Patient Login**: Create a new account via the "Sign Up" page.
+=======
+# MediCare-Plus
+>>>>>>> d2576b5417bd45c34123221f06541fe744011906
