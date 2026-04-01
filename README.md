@@ -10,6 +10,7 @@ A complete Full Stack Hospital Management System built with React, Node.js, Expr
 - **Appointment System**: Real-time slot selection with double-booking prevention.
 - **Modern UI**: Clean and responsive design using Tailwind CSS and Lucide Icons.
 
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: React (Vite), Tailwind CSS, Axios, React Router.
