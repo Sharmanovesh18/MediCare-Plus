@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@layer base {
+  a {
+    @apply cursor-pointer;
+  }
+}
+
+.primary-btn {
+  @apply bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

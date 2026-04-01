@@ -1,0 +1,33 @@
+const db = require('../config/db');
+
+// Get all doctors for list
+const doctorList = async (req, res) => {
+    try {
+        const [doctors] = await db.execute('SELECT id, name, email, specialization, experience, fees, about, image_url FROM doctors');
+        res.json({ success: true, doctors });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+// Get doctor appointments for doctor login
+const doctorAppointments = async (req, res) => {
+    try {
+        const { docId } = req.body;
+        const [appointments] = await db.execute(`
+            SELECT 
+                a.*, u.name as user_name, u.email as user_email
+            FROM appointments a
+            JOIN users u ON a.user_id = u.id
+            WHERE a.doctor_id = ?
+            ORDER BY a.appointment_date DESC, a.appointment_time DESC
+        `, [docId]);
+        res.json({ success: true, appointments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+module.exports = { doctorList, doctorAppointments };
