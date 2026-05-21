@@ -22,7 +22,7 @@ const loginAdmin = async (req, res) => {
 const addDoctor = async (req, res) => {
     try {
         const { name, email, password, specialization, experience, fees, about, slots_booked, image } = req.body;
-        if (!name || !email || !password || !specialization || !experience || !fees || !about) {
+        if (!name || !email || !password || !specialization || experience === '' || fees === '' || !about) {
             return res.json({ success: false, message: "Missing details" });
         }
 

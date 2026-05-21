@@ -28,23 +28,40 @@ const Doctors = () => {
 
   return (
     <div>
-      <p className='text-gray-600 font-light'>Browse through the specialist doctors.</p>
-      <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
-        <button className={`py-1 px-3 border rounded text-sm  transition-all sm:hidden ${showFilter ? 'bg-primary text-white' : ''}`} onClick={() => setShowFilter(prev => !prev)}>Filters</button>
-        <div className={`flex-col gap-4 text-sm text-gray-600 ${showFilter ? 'flex' : 'hidden sm:flex'}`}>
-          <p onClick={() => speciality === 'General physician' ? navigate('/doctors') : navigate('/doctors/General physician')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "General physician" ? "bg-indigo-100 text-black " : ""}`}>General physician</p>
-          <p onClick={() => speciality === 'Gynecologist' ? navigate('/doctors') : navigate('/doctors/Gynecologist')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Gynecologist" ? "bg-indigo-100 text-black " : ""}`}>Gynecologist</p>
-          <p onClick={() => speciality === 'Dermatologist' ? navigate('/doctors') : navigate('/doctors/Dermatologist')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Dermatologist" ? "bg-indigo-100 text-black " : ""}`}>Dermatologist</p>
-          <p onClick={() => speciality === 'Pediatricians' ? navigate('/doctors') : navigate('/doctors/Pediatricians')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Pediatricians" ? "bg-indigo-100 text-black " : ""}`}>Pediatricians</p>
-          <p onClick={() => speciality === 'Neurologist' ? navigate('/doctors') : navigate('/doctors/Neurologist')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Neurologist" ? "bg-indigo-100 text-black " : ""}`}>Neurologist</p>
-          <p onClick={() => speciality === 'Gastroenterologist' ? navigate('/doctors') : navigate('/doctors/Gastroenterologist')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Gastroenterologist" ? "bg-indigo-100 text-black " : ""}`}>Gastroenterologist</p>
+      <p className='text-gray-600 dark:text-slate-350 font-light'>Browse through the specialist doctors.</p>
+      
+      {/* Mobile Speciality Pills (Horizontal scroll) */}
+      <div className='flex sm:hidden gap-2.5 overflow-x-auto w-full py-3 scrollbar-none select-none'>
+          {['General physician', 'Gynecologist', 'Dermatologist', 'Pediatricians', 'Neurologist', 'Gastroenterologist'].map((spec) => (
+              <button
+                  key={spec}
+                  onClick={() => speciality === spec ? navigate('/doctors') : navigate(`/doctors/${spec}`)}
+                  className={`whitespace-nowrap px-4 py-2 text-xs font-bold rounded-full border-2 transition-all duration-300 ${speciality === spec ? 'bg-primary text-white border-primary shadow-md shadow-primary/20' : 'bg-white dark:bg-slate-800 text-secondary/60 dark:text-slate-300 border-gray-100 dark:border-slate-700 hover:border-gray-200 dark:hover:border-slate-600'}`}
+              >
+                  {spec}
+              </button>
+          ))}
+      </div>
+
+      <div className='flex flex-col sm:flex-row items-start gap-5 mt-5 w-full'>
+        {/* Desktop Sidebar Filters */}
+        <div className='hidden sm:flex flex-col gap-4 text-sm text-gray-600 dark:text-slate-300 min-w-[200px]'>
+          {['General physician', 'Gynecologist', 'Dermatologist', 'Pediatricians', 'Neurologist', 'Gastroenterologist'].map((spec) => (
+              <p
+                  key={spec}
+                  onClick={() => speciality === spec ? navigate('/doctors') : navigate(`/doctors/${spec}`)}
+                  className={`pl-3 py-2 pr-12 border border-gray-200 dark:border-slate-700 rounded-xl transition-all cursor-pointer font-semibold hover:bg-accent dark:hover:bg-slate-800 hover:text-primary dark:hover:text-teal-400 ${speciality === spec ? "bg-accent dark:bg-teal-950/30 text-primary dark:text-teal-400 border-primary/30 dark:border-teal-500/30" : ""}`}
+              >
+                  {spec}
+              </p>
+          ))}
         </div>
         <div className='w-full grid grid-cols-auto gap-4 gap-y-6'>
           {
             filterDoc.map((item, index) => (
-              <div onClick={() => { navigate(`/appointment/${item.id}`); window.scrollTo(0, 0) }} className='group bg-white border border-gray-100 rounded-[2rem] p-6 cursor-pointer hover:shadow-xl hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center' key={index}>
+              <div onClick={() => { navigate(`/appointment/${item.id}`); window.scrollTo(0, 0) }} className='group bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-[2rem] p-6 cursor-pointer hover:shadow-xl hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center' key={index}>
                 <div className='relative mb-4'>
-                    <div className='w-24 h-24 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-primary transition-all duration-500'>
+                    <div className='w-24 h-24 rounded-full overflow-hidden border-4 border-primary/10 dark:border-teal-950 group-hover:border-primary dark:group-hover:border-teal-400 transition-all duration-500 shadow-sm'>
                         <img 
                             className='w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700' 
                             src={item.image_url || doctorPlaceholder} 
@@ -53,12 +70,12 @@ const Doctors = () => {
                         />
                     </div>
                     <div className='absolute -bottom-1 -right-1'>
-                        <div className={`w-3 h-3 rounded-full ${item.available ? 'bg-teal-500' : 'bg-gray-300'} border-2 border-white`} />
+                        <div className={`w-3.5 h-3.5 rounded-full ${item.available ? 'bg-teal-500 animate-pulse' : 'bg-gray-300'} border-2 border-white dark:border-slate-800`} />
                     </div>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <p className='text-gray-900 text-lg font-extrabold group-hover:text-primary transition-colors'>{item.name}</p>
-                  <p className='text-primary text-xs font-bold uppercase tracking-wider mt-1'>{item.specialization}</p>
+                  <p className='text-gray-900 dark:text-slate-100 text-lg font-extrabold group-hover:text-primary transition-colors'>{item.name}</p>
+                  <p className='text-primary dark:text-teal-400 text-xs font-bold uppercase tracking-wider mt-1'>{item.specialization}</p>
                 </div>
               </div>
             ))

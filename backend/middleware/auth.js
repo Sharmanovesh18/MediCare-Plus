@@ -24,7 +24,7 @@ const authUser = async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Token not found" });
         }
         const token_decode = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.userId = token_decode.id;
+        req.userId = token_decode.id;
         next();
     } catch (error) {
         console.error(error);
@@ -39,7 +39,7 @@ const authDoctor = async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Token not found" });
         }
         const token_decode = jwt.verify(dtoken, process.env.JWT_SECRET);
-        req.body.docId = token_decode.id;
+        req.docId = token_decode.id;
         next();
     } catch (error) {
         console.error(error);

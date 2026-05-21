@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
-    const currencySymbol = '$';
+    const currencySymbol = '₹';
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const [doctors, setDoctors] = useState([]);
@@ -28,7 +28,17 @@ const AppContextProvider = (props) => {
     };
 
     const loadUserProfileData = async () => {
-        // Implement getting user profile if needed
+        try {
+            const { data } = await axios.get(backendUrl + '/api/user/get-profile', { headers: { token } });
+            if (data.success) {
+                setUserData(data.userData);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message);
+        }
     }
 
     useEffect(() => {

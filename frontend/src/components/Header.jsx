@@ -19,8 +19,8 @@ const Header = () => {
                 <div className='flex flex-col md:flex-row items-center gap-4 text-white/80 text-base font-light max-w-lg'>
                     <div className='flex -space-x-3'>
                         {[1, 2, 3, 4].map(i => (
-                            <div key={i} className='w-10 h-10 rounded-full border-2 border-secondary bg-gray-200 flex items-center justify-center overflow-hidden grayscale hover:grayscale-0 transition-all'>
-                                <UserPlus size={18} className='text-secondary' />
+                            <div key={i} className='w-10 h-10 rounded-full border-2 border-secondary bg-gray-200 flex items-center justify-center overflow-hidden hover:scale-110 transition-all duration-300'>
+                                <img src={`/patients/patient${i}.png`} alt={`Patient ${i}`} className='w-full h-full object-cover' />
                             </div>
                         ))}
                     </div>

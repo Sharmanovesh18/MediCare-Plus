@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+dotenv.config({ override: true });
+
 const adminRouter = require('./routes/adminRoute');
 const doctorRouter = require('./routes/doctorRoute');
 const userRouter = require('./routes/userRoute');
-
-dotenv.config();
 
 // App Config
 const app = express();
@@ -24,6 +24,10 @@ app.get('/', (req, res) => {
     res.send('Hospital Management API Working');
 });
 
-app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`Server started on http://localhost:${port}`);
+    });
+}
+
+module.exports = app;

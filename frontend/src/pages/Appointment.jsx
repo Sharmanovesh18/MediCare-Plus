@@ -75,29 +75,61 @@ const Appointment = () => {
     const bookAppointment = async () => {
         if (!token) {
             toast.warning('Login to book appointment')
+            window.dispatchEvent(new CustomEvent('booking_status', { 
+                detail: { success: false, reason: 'not_logged_in', message: 'Login to book appointment' } 
+            }));
             return navigate('/login')
+        }
+
+        if (!slotTime) {
+            window.dispatchEvent(new CustomEvent('booking_status', { 
+                detail: { success: false, reason: 'missing_slot', message: 'Please select a time slot first' } 
+            }));
+            return toast.warning('Please select a time slot first')
         }
 
         try {
             const date = docSlots[slotIndex][0].datetime
-            let day = date.getDate()
-            let month = date.getMonth() + 1
+            let day = date.getDate().toString().padStart(2, '0')
+            let month = (date.getMonth() + 1).toString().padStart(2, '0')
             let year = date.getFullYear()
 
             const slotDate = `${year}-${month}-${day}`
+
+            // Dispatch event for booking request started
+            window.dispatchEvent(new CustomEvent('booking_started', { 
+                detail: { docId, slotDate, slotTime } 
+            }));
 
             const { data } = await axios.post(backendUrl + '/api/user/book-appointment', { docId, slotDate, slotTime }, { headers: { token } })
             if (data.success) {
                 toast.success(data.message)
                 getDoctorsData()
+                
+                // Dispatch custom event for successful booking
+                window.dispatchEvent(new CustomEvent('booking_status', { 
+                    detail: { success: true, docId, slotDate, slotTime, message: data.message } 
+                }));
+
                 navigate('/my-appointments')
             } else {
                 toast.error(data.message)
+                
+                // Dispatch custom event for failed booking from API response
+                window.dispatchEvent(new CustomEvent('booking_status', { 
+                    detail: { success: false, reason: 'api_error', message: data.message } 
+                }));
             }
 
         } catch (error) {
             console.error(error)
-            toast.error(error.message)
+            const errMsg = error.response?.data?.message || error.message;
+            toast.error(errMsg)
+            
+            // Dispatch custom event for failed booking due to network/server crash
+            window.dispatchEvent(new CustomEvent('booking_status', { 
+                detail: { success: false, reason: 'network_error', message: errMsg } 
+            }));
         }
     }
 
@@ -114,7 +146,7 @@ const Appointment = () => {
             {/* ---------- Doctor Details ----------- */}
             <div className='flex flex-col sm:flex-row items-center sm:items-start gap-8'>
                 <div className='relative'>
-                    <div className='w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-8 border-white shadow-2xl shadow-primary/10'>
+                    <div className='w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-8 border-white dark:border-slate-800 shadow-2xl shadow-primary/10'>
                         <img 
                             className='w-full h-full object-cover object-top' 
                             src={docInfo.image_url || doctorPlaceholder} 
@@ -124,38 +156,38 @@ const Appointment = () => {
                     </div>
                 </div>
 
-                <div className='flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0'>
+                <div className='flex-1 border border-gray-200 dark:border-slate-700 rounded-3xl p-6 sm:p-8 bg-white dark:bg-slate-800 mx-2 sm:mx-0 mt-4 sm:mt-0 shadow-xl dark:shadow-none shadow-gray-100/50'>
                     {/* ----- Doc Info : name, degree, experience ----- */}
-                    <p className='flex items-center gap-2 text-2xl font-medium text-gray-900'>
+                    <p className='flex items-center gap-2 text-2xl font-medium text-gray-900 dark:text-slate-100'>
                         {docInfo.name} 
                         <CheckCircle className='text-primary' size={20} />
                     </p>
-                    <div className='flex items-center gap-2 text-sm mt-1 text-gray-600'>
+                    <div className='flex items-center gap-2 text-sm mt-1 text-gray-600 dark:text-slate-350'>
                         <p>{docInfo.specialization}</p>
-                        <button className='py-0.5 px-2 border text-xs rounded-full'>{docInfo.experience} Years Experience</button>
+                        <button className='py-0.5 px-2 border dark:border-slate-700 text-xs rounded-full'>{docInfo.experience} Years Experience</button>
                     </div>
 
                     {/* ----- Doc About ----- */}
                     <div>
-                        <p className='flex items-center gap-1 text-sm font-medium text-gray-900 mt-3'>
+                        <p className='flex items-center gap-1 text-sm font-medium text-gray-900 dark:text-slate-100 mt-3'>
                             About <Info size={14} />
                         </p>
-                        <p className='text-sm text-gray-500 max-w-[700px] mt-1'>{docInfo.about}</p>
+                        <p className='text-sm text-gray-500 dark:text-slate-400 max-w-[700px] mt-1'>{docInfo.about}</p>
                     </div>
 
-                    <p className='text-gray-500 font-medium mt-4'>
-                        Appointment fee: <span className='text-gray-800'>{currencySymbol}{docInfo.fees}</span>
+                    <p className='text-gray-500 dark:text-slate-400 font-medium mt-4'>
+                        Appointment fee: <span className='text-gray-800 dark:text-slate-200'>{currencySymbol}{docInfo.fees}</span>
                     </p>
                 </div>
             </div>
 
             {/* ------- Booking slots --------- */}
-            <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
+            <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700 dark:text-slate-250'>
                 <p>Booking slots</p>
                 <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>
                     {
                         docSlots.length && docSlots.map((item, index) => (
-                            <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-white' : 'border border-gray-200'}`} key={index}>
+                            <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'border border-gray-200 dark:border-slate-700 dark:text-slate-300'}`} key={index}>
                                 <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
                                 <p>{item[0] && item[0].datetime.getDate()}</p>
                             </div>
@@ -165,12 +197,12 @@ const Appointment = () => {
 
                 <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
                     {docSlots.length && docSlots[slotIndex].map((item, index) => (
-                        <p onClick={() => setSlotTime(item.time)} className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-primary text-white' : 'text-gray-400 border border-gray-300'}`} key={index}>
+                        <p onClick={() => setSlotTime(item.time)} className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-gray-400 dark:text-slate-400 border border-gray-300 dark:border-slate-700'}`} key={index}>
                             {item.time.toLowerCase()}
                         </p>
                     ))}
                 </div>
-                <button onClick={bookAppointment} className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6'>Book an appointment</button>
+                <button onClick={bookAppointment} className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 hover:bg-teal-700 hover:shadow-lg transition-all duration-300'>Book an appointment</button>
             </div>
         </div>
     )

@@ -14,7 +14,7 @@ const doctorList = async (req, res) => {
 // Get doctor appointments for doctor login
 const doctorAppointments = async (req, res) => {
     try {
-        const { docId } = req.body;
+        const docId = req.docId;
         const [appointments] = await db.execute(`
             SELECT 
                 a.*, u.name as user_name, u.email as user_email
