@@ -52,10 +52,10 @@ async function testFullFlow() {
     // 3. BOOK APPOINTMENT
     try {
         console.log("\n3. Testing Appointment Booking...");
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const slotDate = tomorrow.toISOString().split('T')[0];
-        const slotTime = "10:30 AM";
+        const testDate = new Date();
+        testDate.setDate(testDate.getDate() + 2 + Math.floor(Math.random() * 200));
+        const slotDate = testDate.toISOString().split('T')[0];
+        const slotTime = "11:30 AM";
 
         const res = await axios.post(`${BASE_URL}/api/user/book-appointment`, 
             { docId: 1, slotDate, slotTime }, 

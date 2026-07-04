@@ -30,4 +30,20 @@ const doctorAppointments = async (req, res) => {
     }
 }
 
-module.exports = { doctorList, doctorAppointments };
+// Get booked slots for a specific doctor (public/patient-facing)
+const getBookedSlots = async (req, res) => {
+    try {
+        const { docId } = req.params;
+        const [appointments] = await db.execute(
+            'SELECT DATE_FORMAT(appointment_date, "%Y-%m-%d") as appointment_date, appointment_time FROM appointments WHERE doctor_id = ? AND status != "Cancelled"',
+            [docId]
+        );
+        res.json({ success: true, bookedSlots: appointments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+module.exports = { doctorList, doctorAppointments, getBookedSlots };
+
