@@ -1,4 +1,4 @@
-# Heal Sync - Hospital Management System
+# Medicare Plus - Hospital Management System
 
 A complete Full Stack Hospital Management System built with React, Node.js, Express, and MySQL.
 

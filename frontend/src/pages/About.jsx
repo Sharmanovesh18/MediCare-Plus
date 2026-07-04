@@ -10,10 +10,10 @@ const About = () => {
       <div className='my-10 flex flex-col md:flex-row gap-12'>
         <img className='w-full md:max-w-[360px]' src="https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5790.jpg" alt="" />
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600'>
-          <p>Welcome to Prescripto, your trusted partner in managing your healthcare needs conveniently and efficiently. At Prescripto, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
-          <p>Prescripto is committed to excellence in healthcare technology. We continuously strive to enhance our platform, integrating the latest advancements to deliver a superior user experience and deliver top-notch care. Whether you're booking your first appointment or managing ongoing care, Prescripto is here to support you every step of the way.</p>
+          <p>Welcome to Medicare Plus, your trusted partner in managing your healthcare needs conveniently and efficiently. At Medicare Plus, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
+          <p>Medicare Plus is committed to excellence in healthcare technology. We continuously strive to enhance our platform, integrating the latest advancements to deliver a superior user experience and deliver top-notch care. Whether you're booking your first appointment or managing ongoing care, Medicare Plus is here to support you every step of the way.</p>
           <b className='text-gray-800'>Our Vision</b>
-          <p>Our vision at Prescripto is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
+          <p>Our vision at Medicare Plus is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
         </div>
       </div>
 

@@ -20,12 +20,12 @@ const Footer = () => {
                         </svg>
                       </div>
                       <h2 className='text-2xl font-black text-secondary dark:text-slate-100 tracking-tight leading-none flex items-center'>
-                          Heal
-                          <span className='bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent ml-1'>Sync</span>
+                          Medicare
+                          <span className='bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent ml-1'>Plus</span>
                       </h2>
                     </div>
                     <p className='w-full md:w-2/3 text-gray-500 dark:text-slate-400 leading-7'>
-                        Heal Sync is a next-generation hospital management platform dedicated to precision healthcare. We bridge the gap between patients and specialized experts through seamless technology and verified medical excellence.
+                        Medicare Plus is a next-generation hospital management platform dedicated to precision healthcare. We bridge the gap between patients and specialized experts through seamless technology and verified medical excellence.
                     </p>
                 </div>
                 <div>
@@ -41,13 +41,13 @@ const Footer = () => {
                     <p className='text-lg font-extrabold text-secondary dark:text-slate-200 mb-5 uppercase tracking-wider'>Get in touch</p>
                     <ul className='flex flex-col gap-3 text-gray-500 dark:text-slate-400 font-medium'>
                         <li>+91 812-234-567</li>
-                        <li className='hover:text-primary cursor-pointer transition-colors underline'>support@healsync.com</li>
+                        <li className='hover:text-primary cursor-pointer transition-colors underline'>support@medicareplus.com</li>
                         <li className='mt-2 text-xs text-gray-400 dark:text-slate-500'>Urban Estate,New Delhi</li>
                     </ul>
                 </div>
             </div>
             <div className='border-t border-gray-100 dark:border-slate-800 pt-8 pb-10'>
-                <p className='text-sm text-center text-gray-400 dark:text-slate-500 font-medium'>Copyright 2024 @ HealSync.com - All Rights Reserved.</p>
+                <p className='text-sm text-center text-gray-400 dark:text-slate-500 font-medium'>Copyright 2024 @ MedicarePlus.com - All Rights Reserved.</p>
             </div>
         </div>
     )

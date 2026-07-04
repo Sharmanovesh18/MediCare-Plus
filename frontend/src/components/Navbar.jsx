@@ -69,8 +69,8 @@ const Navbar = () => {
                     </div>
                     <div className='flex flex-col'>
                         <h1 className='text-2xl font-black text-secondary dark:text-slate-100 tracking-tight leading-none flex items-center'>
-                            Heal
-                            <span className='bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent ml-1'>Sync</span>
+                            Medicare
+                            <span className='bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent ml-1'>Plus</span>
                         </h1>
                         <span className='text-[8px] text-gray-400 font-bold tracking-[0.25em] uppercase mt-1 leading-none group-hover:text-primary transition-colors duration-300'>Medical Excellence</span>
                     </div>
@@ -188,8 +188,8 @@ const Navbar = () => {
                                 </svg>
                             </div>
                             <h2 className='text-xl font-black text-secondary dark:text-white tracking-tight leading-none flex items-center'>
-                                Heal
-                                <span className='bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent ml-1'>Sync</span>
+                                Medicare
+                                <span className='bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent ml-1'>Plus</span>
                             </h2>
                         </div>
                         <button onClick={() => setShowMenu(false)} className='p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors'>

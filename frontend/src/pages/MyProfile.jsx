@@ -89,7 +89,7 @@ const MyProfile = () => {
           </div>
           
           <p className='text-white/60 text-xs mt-6 max-w-[200px] leading-relaxed z-10 font-medium'>
-            Member since 2026. Your health metrics are encrypted and safely stored in Heal Sync.
+            Member since 2026. Your health metrics are encrypted and safely stored in Medicare Plus.
           </p>
         </div>
 
